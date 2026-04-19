@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Inventory{% endblock %} · StockFlow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="bg-pattern" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="{% url 'product_list' %}" class="brand">
+        <span class="brand-mark">◆</span>
+        <span class="brand-text">StockFlow</span>
+      </a>
+      <nav class="nav">
+        <a href="{% url 'product_list' %}" class="nav-link">Catalog</a>
+        <a href="{% url 'product_add' %}" class="btn btn-primary btn-sm">+ Add product</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container main-wrap">
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>Inventory demo · Django + MongoDB</p>
+    </div>
+  </footer>
+</body>
+</html>

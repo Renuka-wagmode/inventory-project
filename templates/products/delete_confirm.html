@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Delete product{% endblock %}
+
+{% block content %}
+<div class="form-layout narrow">
+  <a href="{% url 'product_list' %}" class="back-link">← Back to catalog</a>
+  <div class="card danger-zone">
+    <h1 class="page-title">Delete this product?</h1>
+    <p class="page-sub">This cannot be undone. The product row and its image file will be removed.</p>
+
+    <div class="delete-preview">
+      {% if product.image %}
+        <img src="{{ MEDIA_URL }}{{ product.image }}" alt="">
+      {% else %}
+        <div class="product-placeholder small">No image</div>
+      {% endif %}
+      <div>
+        <strong>{{ product.name }}</strong>
+        <p class="muted">${{ product.price|floatformat:2 }} · {{ product.quantity }} in stock</p>
+      </div>
+    </div>
+
+    <form method="post" class="form-actions">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, delete</button>
+      <a href="{% url 'product_list' %}" class="btn btn-secondary">No, keep it</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

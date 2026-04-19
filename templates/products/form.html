@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="form-layout">
+  <div>
+    <a href="{% url 'product_list' %}" class="back-link">← Back to catalog</a>
+    <h1 class="page-title">{{ title }}</h1>
+    <p class="page-sub">{% if edit %}Update details and optionally replace the image.{% else %}Fill in the fields below — data is saved to MongoDB.{% endif %}</p>
+  </div>
+
+  <form class="card form-card" method="post" enctype="multipart/form-data" novalidate>
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="form-error-banner">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="field">
+      <label for="id_name">{{ form.name.label }}</label>
+      {{ form.name }}
+      {% if form.name.errors %}<p class="field-error">{{ form.name.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="id_price">{{ form.price.label }}</label>
+        {{ form.price }}
+        {% if form.price.errors %}<p class="field-error">{{ form.price.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="field">
+        <label for="id_quantity">{{ form.quantity.label }}</label>
+        {{ form.quantity }}
+        {% if form.quantity.errors %}<p class="field-error">{{ form.quantity.errors.0 }}</p>{% endif %}
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="id_image">{{ form.image.label }}</label>
+      {{ form.image }}
+      {% if edit and product.image %}
+        <p class="field-hint">Current image is kept unless you choose a new file.</p>
+        <div class="thumb-preview">
+          <img src="{{ MEDIA_URL }}{{ product.image }}" alt="Current">
+        </div>
+      {% endif %}
+      {% if form.image.errors %}<p class="field-error">{{ form.image.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">{% if edit %}Save changes{% else %}Add product{% endif %}</button>
+      <a href="{% url 'product_list' %}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
